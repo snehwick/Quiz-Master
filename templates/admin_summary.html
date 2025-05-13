@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container mt-4">
+    <div class="summary-container">
+        <div class="summary-header">
+            <h2>Admin Analytics Dashboard</h2>
+            <p>Overview of quiz performance across all subjects</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <h3>Top Scores by Subjects</h3>
+                    <img src="data:image/png;base64,{{ bar_graph }}" alt="Bar Graph" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <h3>Quiz Attempts Distribution</h3>
+                    <img src="data:image/png;base64,{{ pie_graph }}" alt="Pie Chart" class="img-fluid">
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-table-container mt-4">
+            <h3>Subject-wise Statistics</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Total Attempts</th>
+                        <th>Average Score</th>
+                        <th>Highest Score</th>
+                        <th>Top Scorer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in subject_data %}
+                    <tr>
+                        <td>{{ data[0] }}</td>
+                        <td>{{ data[1] }}</td>
+                        <td>{{ "%.2f"|format(data[2]) }}</td>
+                        <td>{{ data[3] }}</td>
+                        <td>{{ data[4] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="top-performers-container mt-4">
+            <h3>Top Performers by Subject</h3>
+            <div class="row">
+                {% for subject, performers in top_performers.items() %}
+                <div class="col-md-4 mb-4">
+                    <div class="performer-card">
+                        <h4>{{ subject }}</h4>
+                        <div class="performers-list">
+                            {% for performer in performers %}
+                            <div class="performer-item">
+                                <div class="rank">{{ loop.index }}</div>
+                                <div class="details">
+                                    <span class="username">{{ performer.username }}</span>
+                                    <span class="score">Score: {{ performer.total_score }}</span>
+                                    <span class="quiz-name">{{ performer.quiz_name }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .summary-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .summary-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #005153;
+    }
+    
+    .summary-header h2 {
+        color: #42A1A3;
+        margin-bottom: 5px;
+    }
+    
+    .summary-header p {
+        color: #AAA;
+    }
+    
+    .chart-card, .performer-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+    
+    .chart-card:hover, .performer-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .chart-card h3, .performer-card h4 {
+        color: #42A1A3;
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    
+    .performer-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: black;
+        border-radius: 8px;
+    }
+    
+    .rank {
+        width: 30px;
+        height: 30px;
+        background-color: #005153;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-weight: bold;
+    }
+    
+    .details {
+        flex-grow: 1;
+    }
+    
+    .username {
+        display: block;
+        font-weight: bold;
+        color: #42A1A3;
+    }
+    
+    .score {
+        display: block;
+        font-size: 0.9rem;
+        color: #AAA;
+    }
+    
+    .quiz-name {
+        display: block;
+        font-size: 0.8rem;
+        color: #888;
+    }
+    
+    .stats-table-container {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    
+    .table th {
+        background-color: #005153 !important;
+        color: white;
+        border-color: #333;
+    }
+    
+    .table td {
+        background-color: transparent !important;
+        border-color: #333;
+        color: black;
+    }
+    
+    .table tr:hover td {
+        background-color: white !important;
+    }
+    
+    .btn-secondary {
+        background-color: #005153;
+        border: none;
+        padding: 10px 25px;
+        transition: all 0.3s;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #006B6D;
+        transform: translateY(-2px);
+    }
+</style>
+
+{% endblock body %}

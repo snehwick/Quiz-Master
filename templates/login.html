@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quiz Master - Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #1E1E1E;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 81, 83, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 81, 83, 0.1) 0%, transparent 20%);
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 0 20px;
+        }
+        
+        .login-card {
+            background-color: #2A2A2A;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .login-header {
+            background-color: #005153;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        
+        .login-header h3 {
+            color: white;
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .login-body {
+            padding: 30px;
+        }
+        
+        .form-label {
+            color: #42A1A3;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .form-control {
+            background-color: #3A3A3A;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 12px 15px 12px 45px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            background-color: #333;
+            border-color: #42A1A3;
+            box-shadow: 0 0 0 3px rgba(66, 161, 163, 0.25);
+            color: white;
+        }
+        
+        .form-control::placeholder {
+            color: #999;
+        }
+        
+        .form-text {
+            color: #AAA;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-icon {
+            position: absolute;
+            top: 13px;
+            left: 15px;
+            color: #42A1A3;
+            z-index: 10;
+        }
+        
+        .btn-primary {
+            background-color: #005153;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #006B6D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-footer {
+            padding: 0 30px 25px;
+            text-align: center;
+        }
+        
+        .login-footer p {
+            color: #AAA;
+            margin-bottom: 0;
+        }
+        
+        .login-footer a {
+            color: #42A1A3;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        
+        .login-footer a:hover {
+            color: #4ACDD0;
+            text-decoration: underline;
+        }
+        
+        .brand-name {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #42A1A3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .alert {
+            z-index: 2050;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            min-width: 300px;
+            max-width: 400px;
+            background-color: #2A2A2A;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+        }
+
+        .alert-success {
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-danger {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .alert-info {
+            border-left: 4px solid #0dcaf0;
+        }
+        
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        @media (max-width: 576px) {
+            .login-container {
+                padding: 0 15px;
+            }
+            
+            .login-card {
+                margin-bottom: 20px;
+            }
+            
+            .brand-name {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="brand-name">Quiz Master</div>
+        
+        <div class="login-card">
+            <div class="login-header">
+                <h3>Welcome Back</h3>
+            </div>
+            
+            <div class="login-body">
+                <form method="POST">
+                    <div class="form-group">
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        <div class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+            </div>
+            
+            <div class="login-footer">
+                <p>Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        setTimeout(function () {
+            let alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function (alert) {
+                let bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000); // 5 seconds
+    </script>
+</body>
+</html>

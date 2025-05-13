@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Subject</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="subject_name" class="form-label">Subject Name</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="subject_name" 
+                                   name="subject_name" 
+                                   value="{{ subject.subject_name }}" 
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" 
+                                      id="description" 
+                                      name="description" 
+                                      rows="3">{{ subject.description }}</textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Update Subject</button>
+                            <a href="{{ url_for('manage_subjects') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background-color: #2A2A2A;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .card-header {
+        background-color: #005153;
+        color: white;
+        border-bottom: none;
+    }
+
+    .card-body {
+        color: #fff;
+    }
+
+    .form-label {
+        color: #42A1A3;
+    }
+
+    .form-control {
+        background-color: #333;
+        border: 1px solid #444;
+        color: white;
+    }
+
+    .form-control:focus {
+        background-color: #404040;
+        border-color: #005153;
+        color: white;
+        box-shadow: 0 0 0 0.25rem rgba(0,81,83,0.25);
+    }
+
+    .btn-primary {
+        background-color: #005153;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #006B6D;
+    }
+
+    .btn-secondary {
+        background-color: #2A2A2A;
+        border: 1px solid #005153;
+    }
+
+    .btn-secondary:hover {
+        background-color: #005153;
+    }
+</style>
+
+{% endblock body %}

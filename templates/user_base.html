@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        .navbar{
+            background-color:#005153 ;
+        }
+        .navbar .navbar-brand{
+            color: #FFFFFF;
+        }
+        body{
+            background-color:#1E1E1E ;
+            color: white ;
+        }
+        .card{
+            background-color: #1E1E1E;
+            color: #FFFFFF;
+            border: none;
+            font-weight: 700;
+            height: 200px;         /* Fixed height for all cards */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card p {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;  /* Limit to 3 lines */
+            -webkit-box-orient: vertical;
+        }
+        
+        .card .btn {
+            margin-top: auto;
+        }
+        
+        .form-text{
+            color: #E2E2E2;
+        }
+        .form-control{
+            background-color:#E2E2E2 ;
+            color: #1E1E1E;
+        }
+        .form-control::placeholder{
+            color: #1E1E1E;
+        }
+        .btn-primary{
+            background-color:#005153;
+            border: none;
+        }
+        .table {
+            background-color: #4A4A4A !important; /* Match table background to page */
+            color: white; /* Light text for contrast */
+            border-collapse: collapse; /* Remove extra spacing */
+        }
+        .table th, .table td {
+            background-color: #4A4A4A !important;
+            border: 1px solid #42A1A3; /* Subtle borders for structure */
+            color: #FFFFFF;
+            padding: 10px; /* Improve spacing */
+        }
+        .table thead {
+           background-color: #4A4A4A !important; /* Slightly different header color */
+           color: #FFFFFF; /* White text */
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #4A4A4A !important; /* Alternate row color */
+        }
+        .table tbody tr:hover {
+            background-color: #333 !important; /* Highlight row on hover */
+        }
+
+
+        
+        
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <span class="navbar-brand">Quiz Master - User Dashboard</span>
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('user_search') }}">
+                    <i class="fas fa-search"></i> Search
+                </a>
+            </li>
+        
+        </div>
+        
+    </nav>
+
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show position-fixed" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        setTimeout(function () {
+            let alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function (alert) {
+                let bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000); // 5 seconds
+    </script>
+
+{% block body %}
+    
+{% endblock body %}

@@ -1,0 +1,139 @@
+{% extends 'user_base.html' %}
+{% block body %}
+
+<div class="container mt-4">
+    <div class="search-container">
+        <h2>Search</h2>
+        <form method="GET" class="search-form">
+            <div class="input-group mb-3">
+                <input type="text" name="q" class="form-control" placeholder="Search subjects or quizzes..." value="{{ query if query }}">
+                <select name="type" class="form-select">
+                    <option value="all" {% if search_type == 'all' %}selected{% endif %}>All</option>
+                    <option value="subjects" {% if search_type == 'subjects' %}selected{% endif %}>Subjects</option>
+                    <option value="quizzes" {% if search_type == 'quizzes' %}selected{% endif %}>Quizzes</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Search</button>
+                
+            </div>
+        </form>
+
+        
+
+        {% if results %}
+            {% if results.subjects %}
+                <div class="result-section">
+                    <h3>Subjects</h3>
+                    <div class="row">
+                        {% for subject in results.subjects %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ subject.subject_name }}</h5>
+                                    <p class="card-text">{{ subject.description }}</p>
+                                    <a href="{{ url_for('view_chapters', subject_id=subject.id) }}" class="btn btn-primary">View Chapters</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if results.quizzes %}
+                <div class="result-section">
+                    <h3>Quizzes</h3>
+                    <div class="row">
+                        {% for quiz in results.quizzes %}
+                        <div class="col-md-4 mb-3">
+                            <div class="quiz-card">
+                                <div class="card-content">
+                                    <h4>{{ quiz.name }}</h4>
+                                    <div class="quiz-info">
+                                        <div class="info-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span>{{ quiz.time_duration }} minutes</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fas fa-book"></i>
+                                            <span>{{ quiz.chapter.name }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" class="btn btn-primary">Take Quiz</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class=" text-center mb-4">
+        <a href="{{url_for('user_dashboard')}}" type="button" class="btn btn-secondary">Dashboard</a>
+    </div>
+</div>
+
+<style>
+    .search-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .search-form {
+        background-color: #2A2A2A;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .result-section {
+        margin-bottom: 40px;
+    }
+
+    .result-section h3 {
+        color: #42A1A3;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #005153;
+    }
+
+    .card, .quiz-card {
+        background-color: #2A2A2A;
+        border: none;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover, .quiz-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .quiz-info {
+        color: #AAA;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .info-item i {
+        margin-right: 10px;
+        color: #42A1A3;
+    }
+
+    .btn-primary {
+        background-color: #005153;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #006B6D;
+    }
+</style>
+
+{% endblock body %}

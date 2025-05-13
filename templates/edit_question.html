@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Question</h3>
+                    <p class="mb-0 text-light">Quiz: {{ quiz.name }}</p>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="quiz_question" class="form-label">Question</label>
+                            <textarea class="form-control" 
+                                      id="quiz_question" 
+                                      name="quiz_question" 
+                                      rows="3" 
+                                      required>{{ question.quiz_question }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Options</label>
+                            <div class="option-group">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-text">
+                                        <input type="radio" 
+                                               name="correct_choice" 
+                                               value="1" 
+                                               {% if question.correct_choice == 1 %}checked{% endif %} 
+                                               required>
+                                    </div>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           name="option1" 
+                                           value="{{ question.option1 }}" 
+                                           placeholder="Option 1" 
+                                           required>
+                                </div>
+
+                                <div class="input-group mb-2">
+                                    <div class="input-group-text">
+                                        <input type="radio" 
+                                               name="correct_choice" 
+                                               value="2" 
+                                               {% if question.correct_choice == 2 %}checked{% endif %}>
+                                    </div>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           name="option2" 
+                                           value="{{ question.option2 }}" 
+                                           placeholder="Option 2" 
+                                           required>
+                                </div>
+
+                                <div class="input-group mb-2">
+                                    <div class="input-group-text">
+                                        <input type="radio" 
+                                               name="correct_choice" 
+                                               value="3" 
+                                               {% if question.correct_choice == 3 %}checked{% endif %}>
+                                    </div>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           name="option3" 
+                                           value="{{ question.option3 }}" 
+                                           placeholder="Option 3" 
+                                           required>
+                                </div>
+
+                                <div class="input-group mb-2">
+                                    <div class="input-group-text">
+                                        <input type="radio" 
+                                               name="correct_choice" 
+                                               value="4" 
+                                               {% if question.correct_choice == 4 %}checked{% endif %}>
+                                    </div>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           name="option4" 
+                                           value="{{ question.option4 }}" 
+                                           placeholder="Option 4" 
+                                           required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Update Question</button>
+                            <a href="{{ url_for('manage_questions', quiz_id=quiz.id) }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background-color: #2A2A2A;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .card-header {
+        background-color: #005153;
+        color: white;
+        border-bottom: none;
+    }
+
+    .card-body {
+        color: #fff;
+    }
+
+    .form-label {
+        color: #42A1A3;
+    }
+
+    .form-control {
+        background-color: #333;
+        border: 1px solid #444;
+        color: white;
+    }
+
+    .form-control:focus {
+        background-color: #404040;
+        border-color: #005153;
+        color: white;
+        box-shadow: 0 0 0 0.25rem rgba(0,81,83,0.25);
+    }
+
+    .input-group-text {
+        background-color: #005153;
+        border-color: #005153;
+        color: white;
+    }
+
+    .input-group-text input[type="radio"] {
+        accent-color: #42A1A3;
+    }
+
+    .btn-primary {
+        background-color: #005153;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #006B6D;
+    }
+
+    .btn-secondary {
+        background-color: #2A2A2A;
+        border: 1px solid #005153;
+    }
+
+    .btn-secondary:hover {
+        background-color: #005153;
+    }
+
+    .option-group {
+        background-color: #333;
+        padding: 15px;
+        border-radius: 5px;
+    }
+</style>
+
+{% endblock body %}

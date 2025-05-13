@@ -1,0 +1,162 @@
+{% extends 'user_base.html' %}
+{% block body %}
+
+<div class="container mt-4">
+    <div class="page-header">
+        <h2>Quizzes in {{ chapter.name }}</h2>
+        <p>Choose a quiz to test your knowledge</p>
+    </div>
+
+    <div class="row">
+        {% for quiz in quizzes %}
+        <div class="col-md-4 mb-4">
+            <div class="quiz-card">
+                <div class="card-content">
+                    <h4>{{ quiz.name }}</h4>
+                    <div class="quiz-info">
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>{{ quiz.time_duration }} minutes</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Available from: {{ quiz.start_time.strftime('%Y-%m-%d %H:%M') }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-calendar-times"></i>
+                            <span>Until: {{ quiz.end_time.strftime('%Y-%m-%d %H:%M') }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-info-circle"></i>
+                            <p class="remarks">{{ quiz.remarks }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    {% if quiz.is_available() %}
+                        <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" class="btn btn-primary">Take Quiz</a>
+                    {% else %}
+                        {% if datetime.utcnow() < quiz.start_time %}
+                            <button class="btn btn-secondary" disabled>Not Yet Available</button>
+                        {% else %}
+                            <button class="btn btn-danger" disabled>Quiz Expired</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{{ url_for('view_chapters', subject_id=chapter.subject_id) }}" class="btn btn-secondary">Back to Chapters</a>
+    </div>
+</div>
+
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #005153;
+    }
+
+    .page-header h2 {
+        color: #42A1A3;
+        margin-bottom: 5px;
+    }
+
+    .page-header p {
+        color: #AAA;
+    }
+
+    .quiz-card {
+        background-color: #2A2A2A;
+        border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .quiz-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+
+    .card-content {
+        padding: 20px;
+        flex-grow: 1;
+    }
+
+    .card-content h4 {
+        color: #42A1A3;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+    }
+
+    .quiz-info {
+        color: #AAA;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: start;
+        margin-bottom: 15px;
+    }
+
+    .info-item i {
+        margin-right: 10px;
+        color: #42A1A3;
+        margin-top: 3px;
+    }
+
+    .remarks {
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .card-footer {
+        padding: 15px 20px;
+        background-color: rgba(0,0,0,0.2);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .btn-primary {
+        background-color: #005153;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #006B6D;
+    }
+
+    .btn-secondary {
+        background-color: #2A2A2A;
+        border: 1px solid #005153;
+        padding: 10px 25px;
+        transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+        background-color: #005153;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary:disabled {
+        background-color: #666;
+        cursor: not-allowed;
+    }
+    
+    .btn-danger:disabled {
+        background-color: #dc3545;
+        cursor: not-allowed;
+    }
+</style>
+
+{% endblock body %}

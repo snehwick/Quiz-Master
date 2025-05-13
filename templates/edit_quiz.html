@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Quiz</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Quiz Name</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="name" 
+                                   name="name" 
+                                   value="{{ quiz.name }}" 
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="chapter_id" class="form-label">Chapter</label>
+                            <select class="form-select" id="chapter_id" name="chapter_id" required>
+                                {% for chapter in chapters %}
+                                <option value="{{ chapter.id }}" 
+                                        {% if chapter.id == quiz.chapter_id %}selected{% endif %}>
+                                    {{ chapter.name }} ({{ chapter.subject.subject_name }})
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="quiz_date" class="form-label">Quiz Date</label>
+                            <input type="date" 
+                                   class="form-control" 
+                                   id="quiz_date" 
+                                   name="quiz_date" 
+                                   value="{{ quiz.quiz_date.strftime('%Y-%m-%d') }}" 
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="time_duration" class="form-label">Duration (HH:MM)</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="time_duration" 
+                                   name="time_duration" 
+                                   value="{{ quiz.time_duration }}" 
+                                   pattern="[0-9]{2}:[0-9]{2}"
+                                   placeholder="00:30"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="start_time" class="form-label">Start Time</label>
+                            <input type="datetime-local" 
+                                   class="form-control" 
+                                   id="start_time" 
+                                   name="start_time" 
+                                   value="{{ quiz.start_time.strftime('%Y-%m-%dT%H:%M') }}" 
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="end_time" class="form-label">End Time</label>
+                            <input type="datetime-local" 
+                                   class="form-control" 
+                                   id="end_time" 
+                                   name="end_time" 
+                                   value="{{ quiz.end_time.strftime('%Y-%m-%dT%H:%M') }}" 
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="remarks" class="form-label">Remarks</label>
+                            <textarea class="form-control" 
+                                      id="remarks" 
+                                      name="remarks" 
+                                      rows="3">{{ quiz.remarks }}</textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Update Quiz</button>
+                            <a href="{{ url_for('manage_quizzes') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background-color: #2A2A2A;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .card-header {
+        background-color: #005153;
+        color: white;
+        border-bottom: none;
+    }
+
+    .card-body {
+        color: #fff;
+    }
+
+    .form-label {
+        color: #42A1A3;
+    }
+
+    .form-control, .form-select {
+        background-color: #333;
+        border: 1px solid #444;
+        color: white;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background-color: #404040;
+        border-color: #005153;
+        color: white;
+        box-shadow: 0 0 0 0.25rem rgba(0,81,83,0.25);
+    }
+
+    .form-select option {
+        background-color: #333;
+        color: white;
+    }
+
+    .btn-primary {
+        background-color: #005153;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #006B6D;
+    }
+
+    .btn-secondary {
+        background-color: #2A2A2A;
+        border: 1px solid #005153;
+    }
+
+    .btn-secondary:hover {
+        background-color: #005153;
+    }
+</style>
+
+{% endblock body %}
